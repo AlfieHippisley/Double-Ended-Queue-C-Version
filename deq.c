@@ -36,9 +36,52 @@ int initDEQueue(DEQueue **qPtr){
 		return OUT_OF_MEMORY;
 	}
 
-	// The memory has been allocated correctly so now we can set fields
-	(*qPtr) -> top = NULL;
+	// Now that the queue has been created we can initalise fields
+	(*qPtr) -> head = NULL;
+	(*qPtr) -> tail = NULL;
 
 	// Function completed with success
 	return SUCCESS;
 };
+
+// Function purpose :
+// Push data/nodes to the tail of the queue
+
+// Parameters:
+// qPtr - This is a pointer varible for the new DEQ that has been created
+// data - This is the data to be stored in the queue (In this case an int)
+
+int pushTail(DEQueue *qPtr, int data){
+
+	// Firstly, lets check the pointer to the queue is valid
+	if(qPtr == NULL){
+		return NULL_PARAM;
+	}
+
+	// Now that we know the location/pointer is valid lets allocate the memory
+	Node *newNode = (Node*)malloc(sizeof(Node));
+
+	// Lets now check that the node memory has been allocated correctly
+	if(newNode == NULL){
+		return OUT_OF_MEMORY;
+	}
+
+	// Now that the node has been created we can initalise the fields
+	newNode->data = data;
+	newNode->next = NULL;
+
+	// Now lets check to see if the queue is empty so we know how to join heads & tails
+	if((qPtr-> head = NULL) && (qPtr-> tail = NULL)){
+
+		// Queue must be empty so lets set the head and tail to be this new node
+		qPtr-> head = newNode;
+		qPtr-> tail = newNode;
+
+		return SUCCESS;
+	}
+
+	// So... the Queue must not be empty, therefore we must add this node with others
+	qPtr->tail->next = newNode;
+	qPtr->tail = newNode;
+
+}
