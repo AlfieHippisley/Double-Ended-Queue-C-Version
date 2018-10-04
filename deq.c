@@ -44,6 +44,45 @@ int initDEQueue(DEQueue **qPtr){
 	return SUCCESS;
 };
 
+int pushHead(DEQueue *qPtr, int data){
+
+	// Firstly, lets check the pointer to the queue is valid
+	if(qPtr == NULL){
+		return NULL_PARAM;
+	}
+
+	// Now that we know the location/pointer is valid lets allocate the memory
+	Node *newNode = (Node*)malloc(sizeof(Node));
+
+	// Lets now check that the node memory has been allocated correctly
+	if(newNode == NULL){
+		return OUT_OF_MEMORY;
+	}
+
+	// Now that the node has been created we can initalise the fields
+	newNode -> data = data;
+	newNode -> next = NULL;
+
+	// Now lets check to see if the queue is empty so we know how to join heads & tails
+	if((qPtr -> head = NULL) && (qPtr -> tail = NULL)){
+
+		// Queue must be empty so lets set the head and tail to be this new node
+		qPtr -> head = newNode;
+		qPtr -> tail = newNode;
+
+		return SUCCESS;
+	}
+
+	// Lets set the next reference of this node to the head
+	newNode -> next = qPtr -> head;
+
+	// Then we set the queue head to this node as it is infront
+	qPtr -> head = newNode;
+
+	return SUCCESS;
+
+}
+
 // Function purpose :
 // Push data/nodes to the tail of the queue
 
@@ -67,21 +106,47 @@ int pushTail(DEQueue *qPtr, int data){
 	}
 
 	// Now that the node has been created we can initalise the fields
-	newNode->data = data;
-	newNode->next = NULL;
+	newNode- > data = data;
+	newNode -> next = NULL;
 
 	// Now lets check to see if the queue is empty so we know how to join heads & tails
-	if((qPtr-> head = NULL) && (qPtr-> tail = NULL)){
+	if((qPtr -> head = NULL) && (qPtr -> tail = NULL)){
 
 		// Queue must be empty so lets set the head and tail to be this new node
-		qPtr-> head = newNode;
-		qPtr-> tail = newNode;
+		qPtr -> head = newNode;
+		qPtr -> tail = newNode;
 
 		return SUCCESS;
 	}
 
 	// So... the Queue must not be empty, therefore we must add this node with others
-	qPtr->tail->next = newNode;
-	qPtr->tail = newNode;
+	qPtr -> tail->next = newNode;
+	qPtr -> tail = newNode;
+
+	return SUCCESS;
+
+}
+
+int popHead(DEQueue *qPtr, int *dataPtr){
+
+	// Firstly, lets check the pointer to the queue is valid
+	if(qPtr == NULL){
+		return NULL_PARAM;
+	}
+
+	// Then lets check the data pointer is not null
+	if(dataPtr == NULL){
+		return NULL_PARAM;
+	}
+
+	// And then check that this queue is not empty
+	if((qPtr-> head = NULL) && (qPtr-> tail = NULL)){
+		return POP_EMPTY_DEQ;
+	}
+
+	// We need to create a tempory pointer to the current head of the queue 
+	Node *temp = qPtr -> head;
+	temp
+
 
 }
